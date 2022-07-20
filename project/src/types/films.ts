@@ -20,13 +20,15 @@ export type Film = {
 
 export type Films = Film[];
 
-export type FilmReviews = {
-  id: number;
-  user: {
-    id: number;
-    name: string;
-  };
-  rating: number;
-  comment: string;
-  date: string;
-};
+export type SingleReview = {
+  id: string,
+  author: string,
+  reviewDate: Date,
+  rating: number,
+  content: string,
+}
+
+export type FilmReview = {
+  filmId: string,
+  review: SingleReview[],
+}
