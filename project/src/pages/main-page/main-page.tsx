@@ -1,17 +1,19 @@
 import Logo from '../../components/logo/logo';
-import FilmCard from '../../components/film-card/film-card';
+// import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
+import {Films} from '../../types/films';
+import FilmList from '../../components/film-list/film-list';
 
 type MainPageProps = {
-  filmsNumberToRender: number;
   promoFilm: {
     name: string;
     genre: string;
     year: number;
-  }
+  };
+  films: Films
 }
 
-function MainPage({filmsNumberToRender, promoFilm}: MainPageProps): JSX.Element {
+function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -145,7 +147,8 @@ function MainPage({filmsNumberToRender, promoFilm}: MainPageProps): JSX.Element 
           </ul>
 
           <div className="catalog__films-list">
-            {[...Array(filmsNumberToRender)].map(() => FilmCard())}
+            {/* {[...Array(films)].map(() => FilmCard())} */}
+            <FilmList films={films}/>
           </div>
 
           <div className="catalog__more">
