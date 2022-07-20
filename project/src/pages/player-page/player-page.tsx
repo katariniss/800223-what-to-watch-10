@@ -1,8 +1,16 @@
-function PlayerPage(): JSX.Element {
+import { Film } from '../../types/films';
+
+type PlayerScreenProps = {
+  film: Film,
+}
+
+function PlayerPage ({film}: PlayerScreenProps): JSX.Element {
+  const { name, videoLink } = film;
+
   return (
     <div className="player">
       <video
-        src="#"
+        src={videoLink}
         className="player__video"
         poster="img/player-poster.jpg"
       >
@@ -35,7 +43,7 @@ function PlayerPage(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
