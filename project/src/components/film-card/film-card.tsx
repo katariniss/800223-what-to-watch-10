@@ -1,6 +1,4 @@
 import { Film } from '../../types/films';
-// import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 type FilmCardProps = {
@@ -9,13 +7,11 @@ type FilmCardProps = {
 };
 
 function FilmCard(props: FilmCardProps): JSX.Element {
-  const navigate = useNavigate();
 
   const { film, mouseEnterHandler } = props;
 
   return (
     <article className="small-film-card catalog__films-card"
-      onClick={() => navigate(`/films/${film.id}`)}
       onMouseOver={() => mouseEnterHandler(film)}
     >
       <div className="small-film-card__image">
@@ -27,7 +23,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to="/">
+        <Link className="small-film-card__link" to={`/films/${film.id}`}>
           {film.name}
         </Link>
       </h3>

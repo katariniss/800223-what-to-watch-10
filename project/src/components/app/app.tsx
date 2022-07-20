@@ -28,7 +28,7 @@ function App({ promoFilm, films }: AppProps): JSX.Element {
           element={<MainPage films={films} promoFilm={promoFilm} />}
         />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Film} element={<FilmPage />} />
+        <Route path={AppRoute.Film} element={<FilmPage films = {films} />} />
         <Route
           path={AppRoute.MyList}
           element={

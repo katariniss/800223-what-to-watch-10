@@ -11,11 +11,6 @@ function FilmList({ films }: FilmListProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedFilm, setSelectedFilm] = useState({});
 
-  // const mouseEnterHandler = (id: number) => {
-  //   const activeFilm = films.filter((film) => film.id === id);
-  //   setSelectedFilm(activeFilm);
-  // };
-
   const mouseEnterHandler = (film: Film) => {
     setSelectedFilm(film);
   };
