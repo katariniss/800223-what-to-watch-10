@@ -1,15 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Film } from '../../types/films';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { buildFilmPath } from '../../routing/redirect-service';
 
 type MyListScreenProps = {
-  film: Film,
+  films: Film[],
 }
 
-function AddReviewPage({ film }: MyListScreenProps): JSX.Element {
-  const { id, name, posterImage, backgroundImage } = film;
+function AddReviewPage({ films }: MyListScreenProps): JSX.Element {
+  const params = useParams();
+  const currentFilm: any = films.find(
+    (film) => film.id === Number(params.id)
+  );
+  const { id, name, posterImage, backgroundImage } = currentFilm;
 
   return (
     <section className="film-card film-card--full">
