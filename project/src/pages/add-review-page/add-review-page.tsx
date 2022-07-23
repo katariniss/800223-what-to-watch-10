@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { Film } from '../../types/films';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
+import { buildFilmPath } from '../../routing/redirect-service';
 
 type MyListScreenProps = {
   film: Film,
@@ -25,7 +25,7 @@ function AddReviewPage({ film }: MyListScreenProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={buildFilmPath(id)} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

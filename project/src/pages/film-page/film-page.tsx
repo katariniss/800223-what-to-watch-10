@@ -1,7 +1,8 @@
 import {Films} from '../../types/films';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
+import { buildFilmReviewPath } from '../../routing/redirect-service';
 
 type FilmDetailsProps = {
   films: Films
@@ -72,9 +73,9 @@ function FilmPage({films}: FilmDetailsProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
+                <Link to={buildFilmReviewPath(id as string)} className="btn film-card__button">
                   Add review
-                </a>
+                </Link>
               </div>
             </div>
           </div>
