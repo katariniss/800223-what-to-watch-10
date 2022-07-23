@@ -10,10 +10,16 @@ type MyListScreenProps = {
 
 function AddReviewPage({ films }: MyListScreenProps): JSX.Element {
   const params = useParams();
-  const currentFilm: any = films.find(
+  const currentFilm = films.find(
     (film) => film.id === Number(params.id)
-  );
-  const { id, name, posterImage, backgroundImage } = currentFilm;
+  ) as Film;
+
+  const {
+    id,
+    name,
+    posterImage,
+    backgroundImage
+  } = currentFilm;
 
   return (
     <section className="film-card film-card--full">
