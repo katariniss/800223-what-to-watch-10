@@ -11,7 +11,6 @@ function ReviewForm(): JSX.Element {
         <div className="rating__stars">
           {
             Array.from(Array(10), (value, index) => index + 1)
-              // .sort((a, b) => a - b)
               .reverse()
               .map((number) => (
                 <Fragment key={number}>

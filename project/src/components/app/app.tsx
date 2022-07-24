@@ -9,7 +9,7 @@ import MyListPage from '../../pages/my-list-page/my-list-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import {Films} from '../../types/films';
+import {Films, FilmReviews} from '../../types/films';
 
 type AppProps = {
   promoFilm: {
@@ -17,10 +17,11 @@ type AppProps = {
     genre: string;
     year: number;
   };
-  films: Films
+  films: Films;
+  filmsReviews: FilmReviews;
 }
 
-function App({ promoFilm, films }: AppProps): JSX.Element {
+function App({ promoFilm, films, filmsReviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +30,7 @@ function App({ promoFilm, films }: AppProps): JSX.Element {
           element={<MainPage films={films} promoFilm={promoFilm} />}
         />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Film} element={<FilmPage films = {films} />} />
+        <Route path={AppRoute.Film} element={<FilmPage films={films} filmsReviews={filmsReviews} />} />
         <Route
           path={AppRoute.MyList}
           element={
