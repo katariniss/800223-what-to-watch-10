@@ -15,7 +15,7 @@ export type Film = {
   genre: string;
   released: number;
   isFavorite: boolean;
-  mark: string;
+  mark: string
 };
 
 export type Films = Film[];
@@ -25,10 +25,12 @@ export type SingleReview = {
   author: string,
   reviewDate: Date,
   rating: number,
-  content: string,
-}
+  content: string
+};
 
 export type FilmReview = {
   filmId: string,
-  review: SingleReview[],
-}
+  review: SingleReview[]
+};
+
+export type FilmReviews = FilmReview[];
