@@ -19,7 +19,7 @@ function FilmReviews({ filmReviews }: FilmReviewsProps): JSX.Element {
       </div>
     );
   }
-  return <p>Нет отзывов</p>;
+  return <p>No reviews yet</p>;
 }
 
 export default FilmReviews;

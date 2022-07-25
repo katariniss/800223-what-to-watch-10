@@ -98,7 +98,7 @@ function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews.review}/>
+            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews?.review}/>
           </div>
         </div>
       </section>
