@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Film } from '../../types/films';
 import FilmCard from '../../components/film-card/film-card';
 
@@ -13,16 +12,9 @@ function FilmList({ films, genre }: FilmListProps): JSX.Element {
     films = filmsByGenre;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedFilm, setSelectedFilm] = useState({});
-
-  const mouseEnterHandler = (film: Film) => {
-    setSelectedFilm(film);
-  };
-
   return (
     <div className="catalog__films-list">
-      {films.map((film) => <FilmCard key={film.id} film={film} mouseEnterHandler={mouseEnterHandler} />)}
+      {films.map((film) => <FilmCard key={film.id} film={film} />)}
     </div>
   );
 }

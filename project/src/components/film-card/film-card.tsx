@@ -5,18 +5,16 @@ import VideoPlayer from '../video-player/video-player';
 
 type FilmCardProps = {
   film: Film;
-  mouseEnterHandler(film: Film): void;
 };
 
 function FilmCard(props: FilmCardProps): JSX.Element {
 
-  const { film, mouseEnterHandler } = props;
+  const { film } = props;
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
 
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={() => {
-        mouseEnterHandler(film);
         setTimeout(() => {
           setIsPreviewPlaying((prevState) => !prevState);
         }, 1000);
