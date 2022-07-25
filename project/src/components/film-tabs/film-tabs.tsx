@@ -31,7 +31,7 @@ function FilmTabs({ film, filmReviews }: FilmTabsProps): JSX.Element {
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li className={`film-nav__item ${activeTab === FilmTabName.Overview ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${activeTab === FilmTabName.Overview && 'film-nav__item--active' }`}>
             <a
               className="film-nav__link"
               onClick={() => setActiveTab(FilmTabName.Overview)}
@@ -39,7 +39,7 @@ function FilmTabs({ film, filmReviews }: FilmTabsProps): JSX.Element {
               Overview
             </a>
           </li>
-          <li className={`film-nav__item ${activeTab === FilmTabName.Details ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${activeTab === FilmTabName.Details && 'film-nav__item--active' }`}>
             <a
               className="film-nav__link"
               onClick={() => setActiveTab(FilmTabName.Details)}
@@ -47,7 +47,7 @@ function FilmTabs({ film, filmReviews }: FilmTabsProps): JSX.Element {
               Details
             </a>
           </li>
-          <li className={`film-nav__item ${activeTab === FilmTabName.Reviews ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${activeTab === FilmTabName.Reviews && 'film-nav__item--active' }`}>
             <a
               className="film-nav__link"
               onClick={() => setActiveTab(FilmTabName.Reviews)}
