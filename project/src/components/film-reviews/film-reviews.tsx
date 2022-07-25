@@ -11,10 +11,10 @@ function FilmReviews({ filmReviews }: FilmReviewsProps): JSX.Element {
     return (
       <div className="film-card__reviews film-card__row">
         <div className="film-card__reviews-col">
-          {filmReviews.filter((review, index) => index % 2 === 0).map((review) => <SingleFilmReview key="1" review={review} />)}
+          {filmReviews.filter((review, index) => index % 2 === 0).map((review) => <SingleFilmReview key={review.id} review={review} />)}
         </div>
         <div className="film-card__reviews-col">
-          {filmReviews.filter((review, index) => index % 2 !== 0).map((review) => <SingleFilmReview key="2" review={review} />)}
+          {filmReviews.filter((review, index) => index % 2 !== 0).map((review) => <SingleFilmReview key={review.id} review={review} />)}
         </div>
       </div>
     );
