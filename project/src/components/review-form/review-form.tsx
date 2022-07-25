@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 
 function ReviewForm(): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userRating, setUserRating] = useState(0);
   const [userReview, setUserReview] = useState('');
 
@@ -18,7 +17,7 @@ function ReviewForm(): JSX.Element {
                     className="rating__input"
                     id={`star-${number}`}
                     type="radio" name="rating"
-                    value={number}
+                    value={userRating}
                     onChange={(evt) => setUserRating(Number(evt.target.value))}
                   />
                   <label
