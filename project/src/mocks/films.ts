@@ -77,7 +77,7 @@ export const films: Film[] = [
       'Saoirse Ronan',
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Drama',
     released: 1974,
     isFavorite: true,
     mark: 'Very good',
