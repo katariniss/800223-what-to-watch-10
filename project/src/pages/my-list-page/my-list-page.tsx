@@ -28,7 +28,7 @@ function MyListPage({films}: MyListPageProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={films}/>
+        <FilmList />
       </section>
 
       <footer className="page-footer">

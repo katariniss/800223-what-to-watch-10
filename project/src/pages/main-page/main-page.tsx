@@ -1,8 +1,12 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 // import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
-import {Films} from '../../types/films';
+import { Films } from '../../types/films';
 import FilmList from '../../components/film-list/film-list';
+import GenreList from '../../components/genre-list/genre-list';
+import { useEffect } from 'react';
+import { fetchFilms } from '../../store/actions';
 
 type MainPageProps = {
   promoFilm: {
@@ -13,7 +17,17 @@ type MainPageProps = {
   films: Films
 }
 
-function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
+function MainPage({ promoFilm, films }: MainPageProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const currentGenreFilms = useAppSelector((state) => state.films);
+
+  useEffect(() => {
+    // todo why called twice?
+    dispatch(fetchFilms());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <section className="film-card">
@@ -93,62 +107,11 @@ function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">
-                All genres
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Comedies
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Crime
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Documentary
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Dramas
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Horror
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Kids & Family
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Romance
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Sci-Fi
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Thrillers
-              </a>
-            </li>
-          </ul>
+          <GenreList films={currentGenreFilms} />
 
           <div className="catalog__films-list">
             {/* {[...Array(films)].map(() => FilmCard())} */}
-            <FilmList films={films}/>
+            <FilmList />
           </div>
 
           <div className="catalog__more">

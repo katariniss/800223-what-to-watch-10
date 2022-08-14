@@ -9,3 +9,5 @@ export enum FilmTabName {
     Details = 'DETAILS',
     Reviews = 'REVIEWS'
 }
+
+export const ALL_GENRES = 'All genres';
