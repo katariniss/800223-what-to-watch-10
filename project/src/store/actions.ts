@@ -11,6 +11,4 @@ export const fetchFilms = createAction(
   () => ({payload: films})
 );
 
-// export const changeGenre = createAction<string>('film/changeGenre');
-
-// export const getFilmList = createAction('film/getFilmList');
+export const showMoreFilms = createAction<number>('main/showMoreFilms');
