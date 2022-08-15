@@ -9,7 +9,7 @@ import MyListPage from '../../pages/my-list-page/my-list-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import {Films, FilmReviews} from '../../types/films';
+import { Films, FilmReviews } from '../../types/films';
 
 type AppProps = {
   promoFilm: {

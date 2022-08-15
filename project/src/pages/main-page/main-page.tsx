@@ -108,17 +108,7 @@ function MainPage({ promoFilm, films }: MainPageProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={currentGenreFilms} />
-
-          <div className="catalog__films-list">
-            {/* {[...Array(films)].map(() => FilmCard())} */}
-            <FilmList />
-          </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          <FilmList />
         </section>
         <Footer />
       </div>
