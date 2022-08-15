@@ -50,7 +50,7 @@ export const films: Film[] = [
       'Saoirse Ronan',
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Horror',
     released: 2015,
     isFavorite: false,
     mark: 'Bad',

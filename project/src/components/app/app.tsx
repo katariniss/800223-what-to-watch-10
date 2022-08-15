@@ -10,7 +10,6 @@ import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { Films, FilmReviews } from '../../types/films';
-import ResetFilmList from '../../utils/resetFilmList';
 
 type AppProps = {
   promoFilm: {
@@ -25,7 +24,6 @@ type AppProps = {
 function App({ promoFilm, films, filmsReviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
-      <ResetFilmList />
       <Routes>
         <Route
           path={AppRoute.Main}

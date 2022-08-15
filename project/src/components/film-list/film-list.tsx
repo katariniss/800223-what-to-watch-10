@@ -1,15 +1,14 @@
 import FilmCard from '../../components/film-card/film-card';
-import { FILMS_PER_STEP_COUNT } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { showMoreFilms } from '../../store/actions';
 
 function FilmList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const filmsToShow = useAppSelector((state) => state.filmsPerStep);
 
   const {
     films,
-    genre: currentGenre
+    genre: currentGenre,
+    numberOfFilmsToShow,
   } = useAppSelector((state) => state);
 
   const filmsFilteredByGenre = films.filter((film) => !currentGenre || film.genre === currentGenre);
@@ -20,17 +19,17 @@ function FilmList(): JSX.Element {
         <div className="catalog__films-list">
           {
             filmsFilteredByGenre
-              .slice(0, filmsToShow)
+              .slice(0, numberOfFilmsToShow)
               .map((film) => <FilmCard key={film.id} film={film} />)
           }
         </div>
       </div>
 
-      {filmsFilteredByGenre.length > filmsToShow &&
+      {filmsFilteredByGenre.length > numberOfFilmsToShow &&
         (
           <div className="catalog__more">
             <button
-              onClick={() => dispatch(showMoreFilms(filmsToShow + FILMS_PER_STEP_COUNT))}
+              onClick={() => dispatch(showMoreFilms())}
               className="catalog__button"
               type="button"
             >

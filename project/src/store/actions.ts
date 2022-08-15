@@ -11,4 +11,4 @@ export const fetchFilms = createAction(
   () => ({payload: films})
 );
 
-export const showMoreFilms = createAction<number>('main/showMoreFilms');
+export const showMoreFilms = createAction('main/showMoreFilms');
