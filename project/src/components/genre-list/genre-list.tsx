@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGenre, fetchFilms } from '../../store/actions';
+import { changeGenre } from '../../store/actions';
 import { Film } from '../../types/films';
 import { ALL_GENRES } from '../../const';
 
@@ -36,7 +36,6 @@ function GenreList({ films }: GenreListProps): JSX.Element {
 
   function onGenreClick(genre?: string) {
     dispatch(changeGenre(genre));
-    dispatch(fetchFilms());
   }
 }
 

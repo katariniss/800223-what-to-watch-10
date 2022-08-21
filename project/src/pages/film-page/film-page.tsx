@@ -8,17 +8,24 @@ import FilmTabs from '../../components/film-tabs/film-tabs';
 
 import { buildFilmReviewPath } from '../../routing/redirect-service';
 import FilmList from '../../components/film-list/film-list';
+import UserBlock from '../../components/user-block/user-block';
+import { useAppSelector } from '../../hooks';
 
-type FilmPageProps = {
-  films: Film[],
-  filmsReviews: FilmReview[],
-}
+// type FilmPageProps = {
+//   films: Film[],
+//   filmsReviews: FilmReview[],
+// }
 
-function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
+function FilmPage(): JSX.Element {
   const { id } = useParams();
 
+  const {
+    films,
+  } = useAppSelector((state) => state);
+
   const currentFilm = films.find((film) => film.id === Number(id)) as Film;
-  const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
+  const currentFilmReviews = ([] as FilmReview[]).find((review) => review.filmId === id) as FilmReview;
+  // const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
 
   return (
     <>
@@ -35,21 +42,7 @@ function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width="63"
-                    height="63"
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link" href="#">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock/>
           </header>
 
           <div className="film-card__wrap">

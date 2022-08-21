@@ -34,3 +34,8 @@ export type FilmReview = {
 };
 
 export type FilmReviews = FilmReview[];
+
+export type UserInfo = {
+  avatarUrl: string;
+  name: string;
+}
