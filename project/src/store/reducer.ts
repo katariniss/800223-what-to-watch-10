@@ -1,6 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { FILMS_PER_STEP_COUNT } from '../const';
-import { Film, UserInfo } from '../types/films';
+import {
+  Film,
+  FilmReviews,
+  Films,
+  UserInfo
+} from '../types/films';
 import {
   changeGenre,
   showMoreFilms,
@@ -10,6 +15,8 @@ import {
   setDataLoadedStatus,
   setUserInfo,
   loadCurrentFilm,
+  loadSimilarFilms,
+  loadReviews,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -25,6 +32,8 @@ type FilmsStateType = {
   error: string | null,
   isDataLoaded: boolean,
   isCurrentFilmDataLoaded: boolean,
+  reviews: FilmReviews,
+  similarFilms: Films,
 }
 
 const initialState: FilmsStateType = {
@@ -40,6 +49,8 @@ const initialState: FilmsStateType = {
   error: null,
   isDataLoaded: false,
   isCurrentFilmDataLoaded: false,
+  similarFilms: [],
+  reviews: [],
 };
 
 const reducer = createReducer(initialState, ((builder) => {
@@ -65,6 +76,15 @@ const reducer = createReducer(initialState, ((builder) => {
     })
     .addCase(loadCurrentFilm, (state, action) => {
       state.currentFilm = action.payload;
+    })
+    // .addCase(setCurrentFilmDataLoadedStatus, (state, action) => {
+    //   state.isCurrentFilmDataLoaded = action.payload;
+    // })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

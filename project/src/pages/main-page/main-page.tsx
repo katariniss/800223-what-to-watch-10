@@ -16,7 +16,17 @@ type MainPageProps = {
 
 function MainPage({ promoFilm }: MainPageProps): JSX.Element {
 
-  const currentGenreFilms = useAppSelector((state) => state.films);
+
+  const {
+    films: currentGenreFilms,
+    genre: currentGenre,
+    numberOfFilmsToShow,
+  } = useAppSelector((state) => state);
+
+  const filmsFilteredByGenre = currentGenreFilms
+    .filter((film) => !currentGenre || film.genre === currentGenre);
+
+  const filmsFilteredByGenreToShow = filmsFilteredByGenre.slice(0, numberOfFilmsToShow);
 
   return (
     <>
@@ -32,7 +42,7 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-          <UserBlock/>
+          <UserBlock />
         </header>
 
         <div className="film-card__wrap">
@@ -84,7 +94,10 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={currentGenreFilms} />
-          <FilmList />
+          <FilmList
+            films={filmsFilteredByGenreToShow}
+            hasMoreFilmsToShow={filmsFilteredByGenre.length > numberOfFilmsToShow}
+          />
         </section>
         <Footer />
       </div>

@@ -1,5 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import { Film, Films, UserInfo} from '../types/films';
+import { Film, Films, UserInfo, FilmReviews} from '../types/films';
 import {AuthorizationStatus} from '../const';
 import { AppRoute } from '../routing/app-route';
 
@@ -23,3 +23,9 @@ export const redirectToRoute = createAction<AppRoute>('film/redirectToRoute');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
 export const loadCurrentFilm = createAction<Film>('data/loadCurrentFilm');
+
+export const loadSimilarFilms = createAction<Films>('data/loadSimilarFilms');
+
+export const loadReviews = createAction<FilmReviews>('data/loadReviews');
+
+// export const setCurrentFilmDataLoadedStatus = createAction<boolean>('data/setCurrentFilmDataLoadedStatus');

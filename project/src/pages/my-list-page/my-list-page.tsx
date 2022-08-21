@@ -1,7 +1,6 @@
-import FilmList from '../../components/film-list/film-list';
+// import FilmList from '../../components/film-list/film-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
-
 
 function MyListPage(): JSX.Element {
   return (
@@ -16,7 +15,7 @@ function MyListPage(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList />
+        {/* <FilmList /> */}
       </section>
 
       <footer className="page-footer">

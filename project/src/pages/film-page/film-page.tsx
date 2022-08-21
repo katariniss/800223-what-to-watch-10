@@ -13,14 +13,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchCurrentFilmAction } from '../../store/api-actions';
 
-// type FilmPageProps = {
-//   films: Film[],
-//   filmsReviews: FilmReview[],
-// }
-
 function FilmPage(): JSX.Element {
   const {
     currentFilm,
+    reviews,
+    similarFilms,
+    numberOfFilmsToShow,
   } = useAppSelector((state) => state);
 
   const { id } = useParams();
@@ -31,7 +29,7 @@ function FilmPage(): JSX.Element {
     dispatch(fetchCurrentFilmAction(id));
   }, [id]);
 
-  const currentFilmReviews = ([] as FilmReview[]).find((review) => review.filmId === id) as FilmReview;
+  const currentFilmReviews = reviews.find((review) => review.filmId === id) as FilmReview;
   // const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
 
   return (
@@ -49,7 +47,7 @@ function FilmPage(): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <UserBlock/>
+            <UserBlock />
           </header>
 
           <div className="film-card__wrap">
@@ -98,7 +96,7 @@ function FilmPage(): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews?.review}/>
+            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews?.review} />
           </div>
         </div>
       </section>
@@ -106,7 +104,10 @@ function FilmPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList />
+          <FilmList
+            films={similarFilms}
+            hasMoreFilmsToShow={similarFilms.length > numberOfFilmsToShow}
+          />
         </section>
         <Footer />
       </div>

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { Film, Films } from '../types/films';
+import { Film, FilmReviews, Films } from '../types/films';
 import {
   loadFilms,
   requireAuthorization,
@@ -9,7 +9,10 @@ import {
   setDataLoadedStatus,
   redirectToRoute,
   setUserInfo,
-  loadCurrentFilm
+  // setCurrentFilmDataLoadedStatus,
+  loadCurrentFilm,
+  loadSimilarFilms,
+  loadReviews
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -50,7 +53,11 @@ export const fetchCurrentFilmAction = createAsyncThunk<void, string | undefined,
   'data/fetchCurrentFilm',
   async (id, { dispatch, extra: api }) => {
     const { data: currentFilm } = await api.get<Film>(`${APIRoute.Films}/${id}`);
+    const {data: similarFilms} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    const {data: reviews} = await api.get<FilmReviews>(`${APIRoute.Reviews}/${id}`);
     dispatch(loadCurrentFilm(currentFilm));
+    dispatch(loadSimilarFilms(similarFilms));
+    dispatch(loadReviews(reviews));
   }
 );
 
