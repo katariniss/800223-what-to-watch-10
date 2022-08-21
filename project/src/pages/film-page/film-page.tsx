@@ -1,4 +1,4 @@
-import { Film, FilmReview } from '../../types/films';
+import { FilmReview } from '../../types/films';
 
 import { Link, useParams } from 'react-router-dom';
 
@@ -9,7 +9,9 @@ import FilmTabs from '../../components/film-tabs/film-tabs';
 import { buildFilmReviewPath } from '../../routing/redirect-service';
 import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchCurrentFilmAction } from '../../store/api-actions';
 
 // type FilmPageProps = {
 //   films: Film[],
@@ -17,13 +19,18 @@ import { useAppSelector } from '../../hooks';
 // }
 
 function FilmPage(): JSX.Element {
-  const { id } = useParams();
-
   const {
-    films,
+    currentFilm,
   } = useAppSelector((state) => state);
 
-  const currentFilm = films.find((film) => film.id === Number(id)) as Film;
+  const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrentFilmAction(id));
+  }, [id]);
+
   const currentFilmReviews = ([] as FilmReview[]).find((review) => review.filmId === id) as FilmReview;
   // const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
 

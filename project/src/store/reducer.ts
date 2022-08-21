@@ -9,6 +9,7 @@ import {
   setError,
   setDataLoadedStatus,
   setUserInfo,
+  loadCurrentFilm,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -16,17 +17,20 @@ export const DEFAULT_GENRE = 'All genres';
 
 type FilmsStateType = {
   genre: string;
+  currentFilm: Film,
   films: Film[];
   numberOfFilmsToShow: number,
   authorizationStatus: AuthorizationStatus,
   userInfo: UserInfo,
   error: string | null,
   isDataLoaded: boolean,
+  isCurrentFilmDataLoaded: boolean,
 }
 
 const initialState: FilmsStateType = {
   genre: '',
   films: [],
+  currentFilm: {} as Film,
   numberOfFilmsToShow: FILMS_PER_STEP_COUNT,
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: {
@@ -35,6 +39,7 @@ const initialState: FilmsStateType = {
   },
   error: null,
   isDataLoaded: false,
+  isCurrentFilmDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, ((builder) => {
@@ -57,6 +62,9 @@ const reducer = createReducer(initialState, ((builder) => {
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(loadCurrentFilm, (state, action) => {
+      state.currentFilm = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
