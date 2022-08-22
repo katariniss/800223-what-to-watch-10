@@ -18,22 +18,16 @@ export type Film = {
   mark: string
 };
 
-export type Films = Film[];
-
-export type SingleReview = {
-  id: string,
-  author: string,
-  reviewDate: Date,
-  rating: number,
-  content: string
-};
-
 export type FilmReview = {
-  filmId: string,
-  review: SingleReview[]
+  id: number,
+  user: {
+    id: number,
+    name: string,
+  },
+  date: Date,
+  rating: number,
+  comment: string
 };
-
-export type FilmReviews = FilmReview[];
 
 export type UserInfo = {
   avatarUrl: string;

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { Film, FilmReviews, Films } from '../types/films';
+import { Film, FilmReview } from '../types/films';
 import {
   loadFilms,
   requireAuthorization,
@@ -38,7 +38,7 @@ export const fetchFilmAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchFilms',
   async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Films>(APIRoute.Films);
+    const { data } = await api.get<Film[]>(APIRoute.Films);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFilms(data));
     dispatch(setDataLoadedStatus(false));
@@ -53,8 +53,8 @@ export const fetchCurrentFilmAction = createAsyncThunk<void, string | undefined,
   'data/fetchCurrentFilm',
   async (id, { dispatch, extra: api }) => {
     const { data: currentFilm } = await api.get<Film>(`${APIRoute.Films}/${id}`);
-    const {data: similarFilms} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
-    const {data: reviews} = await api.get<FilmReviews>(`${APIRoute.Reviews}/${id}`);
+    const {data: similarFilms} = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
+    const {data: reviews} = await api.get<FilmReview[]>(`${APIRoute.Reviews}/${id}`);
     dispatch(loadCurrentFilm(currentFilm));
     dispatch(loadSimilarFilms(similarFilms));
     dispatch(loadReviews(reviews));

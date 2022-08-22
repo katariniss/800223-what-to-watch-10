@@ -2,8 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { FILMS_PER_STEP_COUNT } from '../const';
 import {
   Film,
-  FilmReviews,
-  Films,
+  FilmReview,
   UserInfo
 } from '../types/films';
 import {
@@ -32,8 +31,8 @@ type FilmsStateType = {
   error: string | null,
   isDataLoaded: boolean,
   isCurrentFilmDataLoaded: boolean,
-  reviews: FilmReviews,
-  similarFilms: Films,
+  reviews: FilmReview[],
+  similarFilms: Film[],
 }
 
 const initialState: FilmsStateType = {

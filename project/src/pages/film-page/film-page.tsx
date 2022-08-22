@@ -1,5 +1,3 @@
-import { FilmReview } from '../../types/films';
-
 import { Link, useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
@@ -28,9 +26,6 @@ function FilmPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchCurrentFilmAction(id));
   }, [id]);
-
-  const currentFilmReviews = reviews.find((review) => review.filmId === id) as FilmReview;
-  // const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
 
   return (
     <>
@@ -96,7 +91,7 @@ function FilmPage(): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews?.review} />
+            <FilmTabs film={currentFilm} filmReviews={reviews} />
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Film } from '../../types/films';
-import { SingleReview } from '../../types/films';
+import { FilmReview } from '../../types/films';
 import { FilmTabName } from '../../const';
 
 import FilmDetails from '../film-details/film-details';
@@ -10,7 +10,7 @@ import FilmReviews from '../film-reviews/film-reviews';
 
 type FilmTabsProps = {
   film: Film,
-  filmReviews: SingleReview[]
+  filmReviews: FilmReview[]
 }
 
 function FilmTabs({ film, filmReviews }: FilmTabsProps): JSX.Element {
