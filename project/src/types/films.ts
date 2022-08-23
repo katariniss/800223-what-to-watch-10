@@ -33,3 +33,9 @@ export type UserInfo = {
   avatarUrl: string;
   name: string;
 }
+
+export type UserReview = {
+  comment: string;
+  rating: number;
+  filmId: string;
+}

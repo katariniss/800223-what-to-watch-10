@@ -16,6 +16,7 @@ import {
   loadCurrentFilm,
   loadSimilarFilms,
   loadReviews,
+  postReview,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -83,6 +84,9 @@ const reducer = createReducer(initialState, ((builder) => {
       state.similarFilms = action.payload;
     })
     .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(postReview, (state, action) => {
       state.reviews = action.payload;
     })
     .addCase(setError, (state, action) => {

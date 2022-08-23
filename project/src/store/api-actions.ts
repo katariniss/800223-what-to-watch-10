@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { Film, FilmReview } from '../types/films';
+import { Film, FilmReview, UserReview } from '../types/films';
 import {
   loadFilms,
   requireAuthorization,
@@ -12,7 +12,7 @@ import {
   // setCurrentFilmDataLoadedStatus,
   loadCurrentFilm,
   loadSimilarFilms,
-  loadReviews
+  loadReviews,
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -53,8 +53,8 @@ export const fetchCurrentFilmAction = createAsyncThunk<void, string | undefined,
   'data/fetchCurrentFilm',
   async (id, { dispatch, extra: api }) => {
     const { data: currentFilm } = await api.get<Film>(`${APIRoute.Films}/${id}`);
-    const {data: similarFilms} = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
-    const {data: reviews} = await api.get<FilmReview[]>(`${APIRoute.Reviews}/${id}`);
+    const { data: similarFilms } = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
+    const { data: reviews } = await api.get<FilmReview[]>(`${APIRoute.Reviews}/${id}`);
     dispatch(loadCurrentFilm(currentFilm));
     dispatch(loadSimilarFilms(similarFilms));
     dispatch(loadReviews(reviews));
@@ -121,4 +121,29 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
+);
+
+export const postReviewAction = createAsyncThunk<void, UserReview, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postReview',
+  async ({
+    comment,
+    rating,
+    filmId
+  }, {
+    dispatch,
+    extra: api,
+  }) => {
+    const {
+      data: reviews,
+    } = await api.post<FilmReview[]>(`${APIRoute.Reviews}/${filmId}`, {
+      comment,
+      rating,
+    });
+    dispatch(loadReviews(reviews));
+    dispatch(redirectToRoute(`films/${filmId}`));
+  }
 );
