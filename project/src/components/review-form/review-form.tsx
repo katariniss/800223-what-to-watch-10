@@ -24,8 +24,13 @@ function ReviewForm(): JSX.Element {
       filmId: filmId as string,
     };
     setIsPosting(true);
-    await dispatch(postReviewAction(userReview));
+    const result = await dispatch(postReviewAction(userReview));
     setIsPosting(false);
+
+    if (result.type === 'data/postReview/rejected') {
+      // eslint-disable-next-line no-alert
+      alert('Oops! Something went wrong.');
+    }
   };
 
   return (

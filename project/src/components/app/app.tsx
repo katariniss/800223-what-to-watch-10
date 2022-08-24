@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
 import { AppRoute } from '../../routing/app-route';
 import PrivateRoute from '../private-route/private-route';
 import MainPage from '../../pages/main-page/main-page';
@@ -54,7 +53,7 @@ function App({ promoFilm }: AppProps): JSX.Element {
         <Route
           path={AppRoute.AddReview}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <AddReviewPage />
             </PrivateRoute>
           }
