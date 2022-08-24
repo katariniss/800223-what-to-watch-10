@@ -1,13 +1,13 @@
-import { SingleReview } from '../../types/films';
+import { FilmReview } from '../../types/films';
 
 import SingleFilmReview from '../single-film-review/single-film-review';
 
 type FilmReviewsProps = {
-  filmReviews: SingleReview[]
+  filmReviews: FilmReview[]
 }
 
 function FilmReviews({ filmReviews }: FilmReviewsProps): JSX.Element {
-  if (filmReviews) {
+  if (filmReviews.length > 0) {
     return (
       <div className="film-card__reviews film-card__row">
         <div className="film-card__reviews-col">

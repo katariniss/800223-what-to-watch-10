@@ -1,5 +1,3 @@
-import { Film, FilmReview } from '../../types/films';
-
 import { Link, useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
@@ -8,17 +6,26 @@ import FilmTabs from '../../components/film-tabs/film-tabs';
 
 import { buildFilmReviewPath } from '../../routing/redirect-service';
 import FilmList from '../../components/film-list/film-list';
+import UserBlock from '../../components/user-block/user-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchCurrentFilmAction } from '../../store/api-actions';
 
-type FilmPageProps = {
-  films: Film[],
-  filmsReviews: FilmReview[],
-}
+function FilmPage(): JSX.Element {
+  const {
+    currentFilm,
+    reviews,
+    similarFilms,
+    numberOfFilmsToShow,
+  } = useAppSelector((state) => state);
 
-function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
   const { id } = useParams();
 
-  const currentFilm = films.find((film) => film.id === Number(id)) as Film;
-  const currentFilmReviews = filmsReviews.find((review) => review.filmId === id) as FilmReview;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrentFilmAction(id));
+  }, [id]);
 
   return (
     <>
@@ -35,21 +42,7 @@ function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width="63"
-                    height="63"
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link" href="#">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
 
           <div className="film-card__wrap">
@@ -98,7 +91,7 @@ function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmTabs film={currentFilm} filmReviews={currentFilmReviews?.review}/>
+            <FilmTabs film={currentFilm} filmReviews={reviews} />
           </div>
         </div>
       </section>
@@ -106,7 +99,10 @@ function FilmPage({ films, filmsReviews }: FilmPageProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList />
+          <FilmList
+            films={similarFilms}
+            hasMoreFilmsToShow={similarFilms.length > numberOfFilmsToShow}
+          />
         </section>
         <Footer />
       </div>

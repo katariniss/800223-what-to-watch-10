@@ -12,4 +12,13 @@ export enum FilmTabName {
 
 export const ALL_GENRES = 'All genres';
 
-export const FILMS_PER_STEP_COUNT = 4;
+export const FILMS_PER_STEP_COUNT = 8;
+
+export enum APIRoute {
+    Films = '/films',
+    Login = '/login',
+    Logout = '/logout',
+    Reviews = '/comments',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

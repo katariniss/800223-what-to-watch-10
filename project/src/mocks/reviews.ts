@@ -1,6 +1,4 @@
-import { FilmReview } from '../types/films';
-
-export const reviews: FilmReview[] = [
+export const reviews = [
   {
     filmId: '1',
     review: [
