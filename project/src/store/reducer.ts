@@ -77,9 +77,6 @@ const reducer = createReducer(initialState, ((builder) => {
     .addCase(loadCurrentFilm, (state, action) => {
       state.currentFilm = action.payload;
     })
-    // .addCase(setCurrentFilmDataLoadedStatus, (state, action) => {
-    //   state.isCurrentFilmDataLoaded = action.payload;
-    // })
     .addCase(loadSimilarFilms, (state, action) => {
       state.similarFilms = action.payload;
     })

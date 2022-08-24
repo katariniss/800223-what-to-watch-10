@@ -9,7 +9,6 @@ import {
   setDataLoadedStatus,
   redirectToRoute,
   setUserInfo,
-  // setCurrentFilmDataLoadedStatus,
   loadCurrentFilm,
   loadSimilarFilms,
   loadReviews,
