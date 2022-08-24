@@ -12,8 +12,10 @@ function ReviewForm(): JSX.Element {
 
   const [userRating, setUserRating] = useState(0);
   const [userComment, setUserComment] = useState('');
+  const isValid = userComment.length >= 50 && userComment.length <= 400 && userRating > 0;
+  const [isPosting, setIsPosting] = useState(false);
 
-  const handleFormSubmit = (evt: formSubmit) => {
+  const handleFormSubmit = async (evt: formSubmit) => {
     evt.preventDefault();
 
     const userReview = {
@@ -21,8 +23,9 @@ function ReviewForm(): JSX.Element {
       rating: userRating,
       filmId: filmId as string,
     };
-
-    dispatch(postReviewAction(userReview));
+    setIsPosting(true);
+    await dispatch(postReviewAction(userReview));
+    setIsPosting(false);
   };
 
   return (
@@ -40,6 +43,7 @@ function ReviewForm(): JSX.Element {
                     type="radio" name="rating"
                     value={userRating}
                     onChange={(evt) => setUserRating(number)}
+                    disabled={isPosting}
                   />
                   <label
                     className="rating__label"
@@ -60,9 +64,10 @@ function ReviewForm(): JSX.Element {
           placeholder="Review text"
           value={userComment}
           onChange={(evt) => setUserComment(evt.target.value)}
+          disabled={isPosting}
         />
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={!isValid || isPosting}>Post</button>
         </div>
       </div>
     </form>
