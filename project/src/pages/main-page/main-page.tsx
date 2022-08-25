@@ -5,6 +5,8 @@ import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import UserBlock from '../../components/user-block/user-block';
+import { useMemo } from 'react';
+import { ALL_GENRES } from '../../const';
 
 type MainPageProps = {
   promoFilm: {
@@ -15,18 +17,26 @@ type MainPageProps = {
 }
 
 function MainPage({ promoFilm }: MainPageProps): JSX.Element {
-
-
   const {
-    films: currentGenreFilms,
+    films,
     genre: currentGenre,
     numberOfFilmsToShow,
   } = useAppSelector((state) => state);
 
-  const filmsFilteredByGenre = currentGenreFilms
-    .filter((film) => !currentGenre || film.genre === currentGenre);
+  const filmsFilteredByGenre = useMemo(
+    () => films.filter((film) => !currentGenre || film.genre === currentGenre),
+    [currentGenre, films]
+  );
 
-  const filmsFilteredByGenreToShow = filmsFilteredByGenre.slice(0, numberOfFilmsToShow);
+  const filmsFilteredByGenreToShow = useMemo(
+    () => filmsFilteredByGenre.slice(0, numberOfFilmsToShow),
+    [filmsFilteredByGenre, numberOfFilmsToShow]
+  );
+
+  const allGenres = useMemo(
+    () => [ALL_GENRES, ...new Set(films.map(({ genre }) => genre))],
+    [films]
+  );
 
   return (
     <>
@@ -93,7 +103,10 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentGenreFilms} />
+          <GenreList
+            currentGenre={currentGenre}
+            genres={allGenres}
+          />
           <FilmList
             films={filmsFilteredByGenreToShow}
             hasMoreFilmsToShow={filmsFilteredByGenre.length > numberOfFilmsToShow}
