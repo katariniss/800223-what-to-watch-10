@@ -10,6 +10,7 @@ import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchCurrentFilmAction } from '../../store/api-actions';
+import { redirectToRoute } from '../../store/actions';
 
 function FilmPage(): JSX.Element {
   const {
@@ -57,6 +58,7 @@ function FilmPage(): JSX.Element {
                 <button
                   className="btn btn--play film-card__button"
                   type="button"
+                  onClick={()=> dispatch(redirectToRoute(`/player/${id}`))}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>

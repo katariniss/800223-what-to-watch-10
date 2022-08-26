@@ -15,6 +15,7 @@ import LoadingScreen from '../spinner/spinner';
 
 type AppProps = {
   promoFilm: {
+    id: number;
     name: string;
     genre: string;
     year: number;

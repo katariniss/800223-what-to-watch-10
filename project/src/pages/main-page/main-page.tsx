@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 // import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
@@ -7,9 +7,11 @@ import GenreList from '../../components/genre-list/genre-list';
 import UserBlock from '../../components/user-block/user-block';
 import { useMemo } from 'react';
 import { ALL_GENRES } from '../../const';
+import { redirectToRoute } from '../../store/actions';
 
 type MainPageProps = {
   promoFilm: {
+    id: number;
     name: string;
     genre: string;
     year: number;
@@ -37,6 +39,8 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
     () => [ALL_GENRES, ...new Set(films.map(({ genre }) => genre))],
     [films]
   );
+
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -77,6 +81,7 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
                 <button
                   className="btn btn--play film-card__button"
                   type="button"
+                  onClick={() => dispatch(redirectToRoute(`/player/${promoFilm.id}`))}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>

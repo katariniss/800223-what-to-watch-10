@@ -14,6 +14,7 @@ const root = ReactDOM.createRoot(
 );
 
 const promoFilm = {
+  id: 1,
   name: 'The Grand Budapest Hotel',
   genre: 'Drama',
   year: 2014,
