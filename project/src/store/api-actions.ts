@@ -12,6 +12,10 @@ import {
   loadCurrentFilm,
   loadSimilarFilms,
   loadReviews,
+  loadPromoFilm,
+  toggleFavorite,
+  loadFavoriteFilms,
+  setAuthLoadedStatus,
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -44,6 +48,18 @@ export const fetchFilmAction = createAsyncThunk<void, undefined, {
   },
 );
 
+export const fetchPromoFilmAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchPromoFilm',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data: promoFilm } = await api.get<Film>(`${APIRoute.PromoFilm}`);
+    dispatch(loadPromoFilm(promoFilm));
+  }
+);
+
 export const fetchCurrentFilmAction = createAsyncThunk<void, string | undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -67,6 +83,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
+    dispatch(setAuthLoadedStatus(true));
     try {
       const {
         data: {
@@ -82,6 +99,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
+    dispatch(setAuthLoadedStatus(false));
   },
 );
 
@@ -145,4 +163,33 @@ export const postReviewAction = createAsyncThunk<void, UserReview, {
     dispatch(loadReviews(reviews));
     dispatch(redirectToRoute(`films/${filmId}`));
   }
+);
+
+export const toggleFavoriteAction = createAsyncThunk<void, { id: number | string, add: boolean }, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/toggleFavorite',
+  async ({ id, add }, {
+    dispatch,
+    extra: api,
+  }) => {
+    const {
+      data: film,
+    } = await api.post<Film>(`/favorite/${id}/${add ? 1 : 0}`);
+    dispatch(toggleFavorite(film));
+  }
+);
+
+export const fetchFavoriteFilms = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavoriteFilms',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Film[]>('/favorite');
+    dispatch(loadFavoriteFilms(data));
+  },
 );

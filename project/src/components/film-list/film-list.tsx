@@ -1,8 +1,8 @@
 import { Film } from '../../types/films';
-
 import FilmCard from '../../components/film-card/film-card';
 import { useAppDispatch } from '../../hooks';
 import { showMoreFilms } from '../../store/actions';
+import { memo } from 'react';
 
 type FilmListProps = {
   films: Film[],
@@ -41,4 +41,4 @@ function FilmList({
   );
 }
 
-export default FilmList;
+export default memo(FilmList);

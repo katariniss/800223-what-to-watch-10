@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import { redirectToRoute } from '../../store/actions';
+import { AppRoute } from '../../routing/app-route';
 
 function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,7 +21,7 @@ function UserBlock(): JSX.Element {
       {
         authorizationStatus === AuthorizationStatus.Auth && (
           <li className="user-block__item">
-            <div className="user-block__avatar">
+            <div className="user-block__avatar" onClick={() => dispatch(redirectToRoute(AppRoute.MyList))}>
               <img src={avatarUrl} alt={name} width="63" height="63" />
             </div>
           </li>

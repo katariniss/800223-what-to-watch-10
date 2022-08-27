@@ -1,40 +1,46 @@
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
-// import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import UserBlock from '../../components/user-block/user-block';
+import { useMemo } from 'react';
+import { ALL_GENRES } from '../../const';
+import { redirectToRoute } from '../../store/actions';
+import ToggleFavorite from '../../components/toggle-favorite/toggle-favorite';
 
-type MainPageProps = {
-  promoFilm: {
-    name: string;
-    genre: string;
-    year: number;
-  };
-}
-
-function MainPage({ promoFilm }: MainPageProps): JSX.Element {
-
-
+function MainPage(): JSX.Element {
   const {
-    films: currentGenreFilms,
+    films,
+    promoFilm,
     genre: currentGenre,
     numberOfFilmsToShow,
   } = useAppSelector((state) => state);
 
-  const filmsFilteredByGenre = currentGenreFilms
-    .filter((film) => !currentGenre || film.genre === currentGenre);
+  const filmsFilteredByGenre = useMemo(
+    () => films.filter((film) => !currentGenre || film.genre === currentGenre),
+    [currentGenre, films]
+  );
 
-  const filmsFilteredByGenreToShow = filmsFilteredByGenre.slice(0, numberOfFilmsToShow);
+  const filmsFilteredByGenreToShow = useMemo(
+    () => filmsFilteredByGenre.slice(0, numberOfFilmsToShow),
+    [filmsFilteredByGenre, numberOfFilmsToShow]
+  );
+
+  const allGenres = useMemo(
+    () => [ALL_GENRES, ...new Set(films.map(({ genre }) => genre))],
+    [films]
+  );
+
+  const dispatch = useAppDispatch();
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
+            src={promoFilm.backgroundImage}
+            alt={promoFilm.name}
           />
         </div>
 
@@ -49,8 +55,8 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={promoFilm.posterImage}
+                alt={promoFilm.name}
                 width="218"
                 height="327"
               />
@@ -60,29 +66,21 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
               <h2 className="film-card__title">{promoFilm.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.year}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
                 <button
                   className="btn btn--play film-card__button"
                   type="button"
+                  onClick={() => dispatch(redirectToRoute(`/player/${promoFilm.id}`))}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <ToggleFavorite id={promoFilm.id} />
               </div>
             </div>
           </div>
@@ -93,7 +91,10 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentGenreFilms} />
+          <GenreList
+            currentGenre={currentGenre}
+            genres={allGenres}
+          />
           <FilmList
             films={filmsFilteredByGenreToShow}
             hasMoreFilmsToShow={filmsFilteredByGenre.length > numberOfFilmsToShow}

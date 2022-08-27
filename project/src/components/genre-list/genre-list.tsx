@@ -1,22 +1,22 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { memo } from 'react';
+import { useAppDispatch } from '../../hooks';
 import { changeGenre } from '../../store/actions';
-import { Film } from '../../types/films';
-import { ALL_GENRES } from '../../const';
 
 type GenreListProps = {
-  films: Film[];
+  genres: string[];
+  currentGenre: string;
 };
 
-function GenreList({ films }: GenreListProps): JSX.Element {
+function GenreList({
+  genres,
+  currentGenre,
+}: GenreListProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const currentGenre = useAppSelector((state) => state.genre);
-
-  const allGenres = [ALL_GENRES, ...new Set(films.map(({ genre }) => genre))];
 
   return (
     <ul className="catalog__genres-list">
       {
-        allGenres.map((genre, index) => (
+        genres.map((genre, index) => (
           <li
             onClick={(e) => {
               e.preventDefault();
@@ -39,4 +39,4 @@ function GenreList({ films }: GenreListProps): JSX.Element {
   }
 }
 
-export default GenreList;
+export default memo(GenreList);
