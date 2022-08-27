@@ -16,11 +16,23 @@ function PlayerPage(): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
   useEffect(() => {
     setIsLoading(true);
     dispatch(fetchCurrentFilmAction(id));
     setIsLoading(false);
   }, [id]);
+
+  useEffect(() => {
+    isPlaying
+      ? videoRef.current?.play()
+      : videoRef.current?.pause();
+  }, [isPlaying]);
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   const handleFullScreenClick = () => videoRef.current?.requestFullscreen();
 
@@ -35,10 +47,11 @@ function PlayerPage(): JSX.Element {
               ref={videoRef}
               className="player__video"
               poster={currentFilm.posterImage}
+              onClick={() => setIsPlaying(false)}
             >
             </video>
 
-            <button type="button" className="player__exit" onClick={()=> dispatch(redirectToRoute(`/films/${id}`))}>
+            <button type="button" className="player__exit" onClick={() => dispatch(redirectToRoute(`/films/${id}`))}>
               Exit
             </button>
 
@@ -59,12 +72,33 @@ function PlayerPage(): JSX.Element {
               </div>
 
               <div className="player__controls-row">
-                <button type="button" className="player__play">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                {
+                  isPlaying
+                    ? (
+                      <button
+                        type="button"
+                        className="player__play"
+                        onClick={() => togglePlay()}
+                      >
+                        <svg viewBox="0 0 14 21" width="14" height="21">
+                          <use xlinkHref="#pause" />
+                        </svg>
+                        <span>Pause</span>
+                      </button>
+                    )
+                    : (
+                      <button
+                        type="button"
+                        className="player__play"
+                        onClick={() => togglePlay()}
+                      >
+                        <svg viewBox="0 0 19 19" width="19" height="19">
+                          <use xlinkHref="#play-s" />
+                        </svg>
+                        <span>Play</span>
+                      </button>
+                    )
+                }
                 <div className="player__name">{currentFilm.name}</div>
 
                 <button type="button" className="player__full-screen" onClick={handleFullScreenClick}>
@@ -78,7 +112,6 @@ function PlayerPage(): JSX.Element {
           </div>
         )
       }
-
     </>
   );
 }
