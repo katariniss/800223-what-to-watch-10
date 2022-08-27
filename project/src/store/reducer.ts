@@ -18,6 +18,7 @@ import {
   loadReviews,
   postReview,
   loadPromoFilm,
+  addFavorite,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -36,6 +37,7 @@ type FilmsStateType = {
   isCurrentFilmDataLoaded: boolean,
   reviews: FilmReview[],
   similarFilms: Film[],
+  favoriteFilms: Film[],
 }
 
 const initialState: FilmsStateType = {
@@ -54,6 +56,7 @@ const initialState: FilmsStateType = {
   isCurrentFilmDataLoaded: false,
   similarFilms: [],
   reviews: [],
+  favoriteFilms: [],
 };
 
 const reducer = createReducer(initialState, ((builder) => {
@@ -91,6 +94,10 @@ const reducer = createReducer(initialState, ((builder) => {
     })
     .addCase(postReview, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(addFavorite, (state, action) => {
+      const favoriteFilm = state.films.find((film) => film.id === Number(action.payload.id));
+      favoriteFilm!.isFavorite = action.payload.isFavorite;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

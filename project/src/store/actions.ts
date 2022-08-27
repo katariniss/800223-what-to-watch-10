@@ -30,3 +30,5 @@ export const loadSimilarFilms = createAction<Film[]>('data/loadSimilarFilms');
 export const loadReviews = createAction<FilmReview[]>('data/loadReviews');
 
 export const postReview = createAction<FilmReview[]>('data/postReview');
+
+export const addFavorite = createAction<Film>('data/addFavorite');

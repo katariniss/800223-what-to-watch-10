@@ -13,6 +13,7 @@ import {
   loadSimilarFilms,
   loadReviews,
   loadPromoFilm,
+  addFavorite,
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -158,5 +159,22 @@ export const postReviewAction = createAsyncThunk<void, UserReview, {
     });
     dispatch(loadReviews(reviews));
     dispatch(redirectToRoute(`films/${filmId}`));
+  }
+);
+
+export const addFavoriteAction = createAsyncThunk<void, string | undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/addFavorite',
+  async (id, {
+    dispatch,
+    extra: api,
+  }) => {
+    const {
+      data: film,
+    } = await api.post<Film>(`/favorite/${id}/1`);
+    dispatch(addFavorite(film));
   }
 );
