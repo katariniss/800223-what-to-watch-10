@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/actions';
 import { fetchCurrentFilmAction } from '../../store/api-actions';
+import format from 'format-duration';
 
 function PlayerPage(): JSX.Element {
 
@@ -14,9 +16,7 @@ function PlayerPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const videoElement = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,17 +24,36 @@ function PlayerPage(): JSX.Element {
     setIsLoading(false);
   }, [id]);
 
-  useEffect(() => {
-    isPlaying
-      ? videoRef.current?.play()
-      : videoRef.current?.pause();
-  }, [isPlaying]);
+  const handleFullScreenClick = () => videoElement.current?.requestFullscreen();
+
+  const [playerState, setPlayerState] = useState({
+    isPlaying: true,
+    progress: 0,
+    timeLeftInSec: 0,
+    speed: 1,
+  });
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    setPlayerState({
+      ...playerState,
+      isPlaying: !playerState.isPlaying,
+    });
   };
 
-  const handleFullScreenClick = () => videoRef.current?.requestFullscreen();
+  useEffect(() => {
+    playerState.isPlaying
+      ? videoElement!.current!.play()
+      : videoElement!.current!.pause();
+  }, [playerState.isPlaying, videoElement]);
+
+  const handleOnTimeUpdate = () => {
+    const progress = (videoElement!.current!.currentTime / videoElement!.current!.duration) * 100;
+    setPlayerState({
+      ...playerState,
+      progress,
+      timeLeftInSec: videoElement!.current!.duration - videoElement!.current!.currentTime,
+    });
+  };
 
   return (
     <>
@@ -44,10 +63,13 @@ function PlayerPage(): JSX.Element {
           <div className="player">
             <video
               src={currentFilm.videoLink}
-              ref={videoRef}
+              ref={videoElement}
               className="player__video"
               poster={currentFilm.posterImage}
-              onClick={() => setIsPlaying(false)}
+              onClick={() => togglePlay()}
+              onTimeUpdate={handleOnTimeUpdate}
+              muted
+              autoPlay
             >
             </video>
 
@@ -60,20 +82,20 @@ function PlayerPage(): JSX.Element {
                 <div className="player__time">
                   <progress
                     className="player__progress"
-                    value="30"
+                    value={playerState.progress}
                     max="100"
                   >
                   </progress>
-                  <div className="player__toggler" style={{ left: '30%' }}>
+                  <div className="player__toggler" style={{ left: `${playerState.progress}%` }}>
                     Toggler
                   </div>
                 </div>
-                <div className="player__time-value">1:30:29</div>
+                <div className="player__time-value">{`-${format(playerState.timeLeftInSec * 1000, { leading: true })}`}</div>
               </div>
 
               <div className="player__controls-row">
                 {
-                  isPlaying
+                  playerState.isPlaying
                     ? (
                       <button
                         type="button"
