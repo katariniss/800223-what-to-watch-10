@@ -9,8 +9,9 @@ import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchCurrentFilmAction, addFavoriteAction } from '../../store/api-actions';
+import { fetchCurrentFilmAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/actions';
+import ToggleFavorite from '../../components/toggle-favorite/toggle-favorite';
 
 function FilmPage(): JSX.Element {
   const {
@@ -26,13 +27,6 @@ function FilmPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchCurrentFilmAction(id));
   }, [id]);
-
-  const isFavorite = true;
-  const favoriteCount = 11;
-
-  const handleAddToFavorite = () => {
-    dispatch(addFavoriteAction(id));
-  };
 
   return (
     <>
@@ -71,21 +65,7 @@ function FilmPage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                  onClick={handleAddToFavorite}
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    {
-                      isFavorite
-                        ? <use xlinkHref="#in-list" />
-                        : <use xlinkHref="#add" />
-                    }
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">{favoriteCount}</span>
-                </button>
+                <ToggleFavorite id={currentFilm.id} />
                 <Link to={buildFilmReviewPath(id as string)} className="btn film-card__button">
                   Add review
                 </Link>

@@ -1,5 +1,4 @@
 import { Film } from '../../types/films';
-
 import FilmCard from '../../components/film-card/film-card';
 import { useAppDispatch } from '../../hooks';
 import { showMoreFilms } from '../../store/actions';

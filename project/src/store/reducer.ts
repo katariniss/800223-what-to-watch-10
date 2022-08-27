@@ -18,7 +18,9 @@ import {
   loadReviews,
   postReview,
   loadPromoFilm,
-  addFavorite,
+  toggleFavorite,
+  loadFavoriteFilms,
+  setAuthLoadedStatus,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -33,6 +35,7 @@ type FilmsStateType = {
   authorizationStatus: AuthorizationStatus,
   userInfo: UserInfo,
   error: string | null,
+  isAuthLoaded: boolean,
   isDataLoaded: boolean,
   isCurrentFilmDataLoaded: boolean,
   reviews: FilmReview[],
@@ -52,6 +55,7 @@ const initialState: FilmsStateType = {
     name: ''
   },
   error: null,
+  isAuthLoaded: false,
   isDataLoaded: false,
   isCurrentFilmDataLoaded: false,
   similarFilms: [],
@@ -80,6 +84,9 @@ const reducer = createReducer(initialState, ((builder) => {
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
+    .addCase(setAuthLoadedStatus, (state, action) => {
+      state.isAuthLoaded = action.payload;
+    })
     .addCase(loadCurrentFilm, (state, action) => {
       state.currentFilm = action.payload;
     })
@@ -95,9 +102,28 @@ const reducer = createReducer(initialState, ((builder) => {
     .addCase(postReview, (state, action) => {
       state.reviews = action.payload;
     })
-    .addCase(addFavorite, (state, action) => {
-      const favoriteFilm = state.films.find((film) => film.id === Number(action.payload.id));
-      favoriteFilm!.isFavorite = action.payload.isFavorite;
+    .addCase(loadFavoriteFilms, (state, action) => {
+      state.favoriteFilms = action.payload;
+    })
+    .addCase(toggleFavorite, (state, action) => {
+      const filmInListOfAllFilms = state.films.find((film) => film.id === Number(action.payload.id)) as Film;
+      filmInListOfAllFilms.isFavorite = action.payload.isFavorite;
+
+      if (state.currentFilm.id === action.payload.id) {
+        state.currentFilm.isFavorite = action.payload.isFavorite;
+      }
+
+      if (filmInListOfAllFilms.isFavorite) {
+        if (state.favoriteFilms.every((film) => film.id !== filmInListOfAllFilms.id)) {
+          state.favoriteFilms.push(filmInListOfAllFilms);
+        }
+      } else {
+        const indexInFavoriteFiles = state.favoriteFilms.findIndex((film) => film.id === Number(action.payload.id));
+
+        if (indexInFavoriteFiles !== -1) {
+          state.favoriteFilms.splice(indexInFavoriteFiles, 1);
+        }
+      }
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
-// import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
@@ -8,6 +7,7 @@ import UserBlock from '../../components/user-block/user-block';
 import { useMemo } from 'react';
 import { ALL_GENRES } from '../../const';
 import { redirectToRoute } from '../../store/actions';
+import ToggleFavorite from '../../components/toggle-favorite/toggle-favorite';
 
 function MainPage(): JSX.Element {
   const {
@@ -80,16 +80,7 @@ function MainPage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <ToggleFavorite id={promoFilm.id} />
               </div>
             </div>
           </div>

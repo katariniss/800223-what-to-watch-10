@@ -23,6 +23,8 @@ export const redirectToRoute = createAction<string>('film/redirectToRoute');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
+export const setAuthLoadedStatus = createAction<boolean>('data/setAuthLoadedStatus');
+
 export const loadCurrentFilm = createAction<Film>('data/loadCurrentFilm');
 
 export const loadSimilarFilms = createAction<Film[]>('data/loadSimilarFilms');
@@ -31,4 +33,6 @@ export const loadReviews = createAction<FilmReview[]>('data/loadReviews');
 
 export const postReview = createAction<FilmReview[]>('data/postReview');
 
-export const addFavorite = createAction<Film>('data/addFavorite');
+export const toggleFavorite = createAction<Film>('data/toggleFavorite');
+
+export const loadFavoriteFilms = createAction<Film[]>('data/loadFavoriteFilms');
