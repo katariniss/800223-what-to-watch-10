@@ -17,6 +17,7 @@ import {
   loadSimilarFilms,
   loadReviews,
   postReview,
+  loadPromoFilm,
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
@@ -25,6 +26,7 @@ export const DEFAULT_GENRE = 'All genres';
 type FilmsStateType = {
   genre: string;
   currentFilm: Film,
+  promoFilm: Film,
   films: Film[];
   numberOfFilmsToShow: number,
   authorizationStatus: AuthorizationStatus,
@@ -40,6 +42,7 @@ const initialState: FilmsStateType = {
   genre: '',
   films: [],
   currentFilm: {} as Film,
+  promoFilm: {} as Film,
   numberOfFilmsToShow: FILMS_PER_STEP_COUNT,
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: {
@@ -76,6 +79,9 @@ const reducer = createReducer(initialState, ((builder) => {
     })
     .addCase(loadCurrentFilm, (state, action) => {
       state.currentFilm = action.payload;
+    })
+    .addCase(loadPromoFilm, (state, action) => {
+      state.promoFilm = action.payload;
     })
     .addCase(loadSimilarFilms, (state, action) => {
       state.similarFilms = action.payload;

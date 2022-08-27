@@ -12,6 +12,7 @@ import {
   loadCurrentFilm,
   loadSimilarFilms,
   loadReviews,
+  loadPromoFilm,
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -42,6 +43,19 @@ export const fetchFilmAction = createAsyncThunk<void, undefined, {
     dispatch(loadFilms(data));
     dispatch(setDataLoadedStatus(false));
   },
+);
+
+
+export const fetchPromoFilmAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchPromoFilm',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data: promoFilm } = await api.get<Film>(`${APIRoute.PromoFilm}`);
+    dispatch(loadPromoFilm(promoFilm));
+  }
 );
 
 export const fetchCurrentFilmAction = createAsyncThunk<void, string | undefined, {

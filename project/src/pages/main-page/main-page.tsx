@@ -9,18 +9,10 @@ import { useMemo } from 'react';
 import { ALL_GENRES } from '../../const';
 import { redirectToRoute } from '../../store/actions';
 
-type MainPageProps = {
-  promoFilm: {
-    id: number;
-    name: string;
-    genre: string;
-    year: number;
-  };
-}
-
-function MainPage({ promoFilm }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const {
     films,
+    promoFilm,
     genre: currentGenre,
     numberOfFilmsToShow,
   } = useAppSelector((state) => state);
@@ -47,8 +39,8 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
+            src={promoFilm.backgroundImage}
+            alt={promoFilm.name}
           />
         </div>
 
@@ -63,8 +55,8 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={promoFilm.posterImage}
+                alt={promoFilm.name}
                 width="218"
                 height="327"
               />
@@ -74,7 +66,7 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
               <h2 className="film-card__title">{promoFilm.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.year}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">

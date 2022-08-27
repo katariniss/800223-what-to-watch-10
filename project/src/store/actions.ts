@@ -11,6 +11,8 @@ export const showMoreFilms = createAction('main/showMoreFilms');
 
 export const loadFilms = createAction<Film[]>('data/loadFilms');
 
+export const loadPromoFilm = createAction<Film>('data/loadPromoFilm');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setUserInfo = createAction<UserInfo>('user/setUserInfo');

@@ -13,16 +13,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import LoadingScreen from '../spinner/spinner';
 
-type AppProps = {
-  promoFilm: {
-    id: number;
-    name: string;
-    genre: string;
-    year: number;
-  };
-}
-
-function App({ promoFilm }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const {
     authorizationStatus,
     isDataLoaded,
@@ -39,7 +30,7 @@ function App({ promoFilm }: AppProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage promoFilm={promoFilm} />}
+          element={<MainPage/>}
         />
         <Route path={AppRoute.Login} element={<LoginPage authorizationStatus={authorizationStatus} />} />
         <Route path={AppRoute.Film} element={<FilmPage />} />
