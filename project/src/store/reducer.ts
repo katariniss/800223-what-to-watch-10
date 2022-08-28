@@ -24,6 +24,26 @@ import {
 } from './actions';
 import { AuthorizationStatus } from '../const';
 
+const filmNullObject: Film = {
+  id: 0,
+  name: '',
+  posterImage: '',
+  previewImage: '',
+  backgroundImage: '',
+  videoLink: '',
+  previewVideoLink: '',
+  description: '',
+  rating: 0,
+  scoresCount: 0,
+  director: '',
+  starring: [],
+  runTime: 0,
+  genre: '',
+  released: 0,
+  isFavorite: false,
+  mark: ''
+};
+
 export const DEFAULT_GENRE = 'All genres';
 
 type FilmsStateType = {
@@ -46,8 +66,8 @@ type FilmsStateType = {
 const initialState: FilmsStateType = {
   genre: '',
   films: [],
-  currentFilm: {} as Film,
-  promoFilm: {} as Film,
+  currentFilm: filmNullObject,
+  promoFilm: filmNullObject,
   numberOfFilmsToShow: FILMS_PER_STEP_COUNT,
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: {
