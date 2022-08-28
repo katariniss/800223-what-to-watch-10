@@ -136,6 +136,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dispatch(loadFavoriteFilms([]));
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );

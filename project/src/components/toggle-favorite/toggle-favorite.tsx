@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/actions';
 import { toggleFavoriteAction } from '../../store/api-actions';
 
 function ToggleFavorite({
@@ -17,13 +18,17 @@ function ToggleFavorite({
   const favoriteFilm = favoriteFilms.find((film) => film.id === id);
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavoriteAction({
-      id,
-      add: !favoriteFilm,
-    }));
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(toggleFavoriteAction({
+        id,
+        add: !favoriteFilm,
+      }));
+    } else {
+      dispatch(redirectToRoute('/login'));
+    }
   };
 
-  return authorizationStatus === AuthorizationStatus.Auth ? (
+  return (
     <button
       className="btn btn--list film-card__button"
       type="button"
@@ -39,8 +44,7 @@ function ToggleFavorite({
       <span>My list</span>
       <span className="film-card__count">{favoriteFilms.length}</span>
     </button>
-  )
-    : null;
+  );
 }
 
 export default ToggleFavorite;
