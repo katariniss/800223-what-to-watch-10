@@ -25,13 +25,17 @@ function LoginPage(props: AuthorizationStatusProps): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && checkPassword(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
     }
   };
+
+  function checkPassword(inputText: string) {
+    return (inputText.match(/^(?=.*[a-zA-Z])(?=.*\d){2,}/));
+  }
 
   return authorizationStatus === AuthorizationStatus.Auth ? (
     <Navigate to={AppRoute.Main} />

@@ -18,11 +18,9 @@ function FilmList({
   return (
     <>
       <div className="catalog__films-list">
-        <div className="catalog__films-list">
-          {
-            films.map((film) => <FilmCard key={film.id} film={film} />)
-          }
-        </div>
+        {
+          films.map((film) => <FilmCard key={film.id} film={film} />)
+        }
       </div>
 
       {hasMoreFilmsToShow &&

@@ -11,7 +11,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import LoadingScreen from '../spinner/spinner';
+import Loader from '../loader/loader';
 
 function App(): JSX.Element {
   const {
@@ -22,7 +22,7 @@ function App(): JSX.Element {
 
   if (isDataLoaded || isAuthLoaded) {
     return (
-      <LoadingScreen />
+      <Loader />
     );
   }
 

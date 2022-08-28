@@ -2,6 +2,7 @@ import { Fragment, useState, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { postReviewAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
+import { USER_COMMENT_MAX_LENGTH, USER_COMMENT_MIN_LENGTH } from '../../const';
 
 function ReviewForm(): JSX.Element {
   type formSubmit = FormEvent<HTMLFormElement>;
@@ -12,7 +13,7 @@ function ReviewForm(): JSX.Element {
 
   const [userRating, setUserRating] = useState(0);
   const [userComment, setUserComment] = useState('');
-  const isValid = userComment.length >= 50 && userComment.length <= 400 && userRating > 0;
+  const isValid = userComment.length >= USER_COMMENT_MIN_LENGTH && userComment.length <= USER_COMMENT_MAX_LENGTH && userRating;
   const [isPosting, setIsPosting] = useState(false);
 
   const handleFormSubmit = async (evt: formSubmit) => {

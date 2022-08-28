@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { FILMS_PER_STEP_COUNT } from '../const';
+import { FILMS_PER_STEP_COUNT, ALL_GENRES } from '../const';
 import {
   Film,
   FilmReview,
@@ -44,7 +44,7 @@ const filmNullObject: Film = {
   mark: ''
 };
 
-export const DEFAULT_GENRE = 'All genres';
+export const DEFAULT_GENRE = ALL_GENRES;
 
 type FilmsStateType = {
   genre: string;
