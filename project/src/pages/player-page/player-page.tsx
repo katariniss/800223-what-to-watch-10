@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -42,16 +41,16 @@ function PlayerPage(): JSX.Element {
 
   useEffect(() => {
     playerState.isPlaying
-      ? videoElement!.current!.play()
-      : videoElement!.current!.pause();
+      ? videoElement?.current?.play()
+      : videoElement?.current?.pause();
   }, [playerState.isPlaying, videoElement]);
 
   const handleOnTimeUpdate = () => {
-    const progress = (videoElement!.current!.currentTime / videoElement!.current!.duration) * 100;
+    const progress = ((videoElement?.current?.currentTime || 0) / (Number(videoElement?.current?.duration) || 1)) * 100;
     setPlayerState({
       ...playerState,
       progress,
-      timeLeftInSec: videoElement!.current!.duration - videoElement!.current!.currentTime,
+      timeLeftInSec: (Number(videoElement?.current?.duration) || 0) - (videoElement?.current?.currentTime || 0),
     });
   };
 
