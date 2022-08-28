@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { toggleFavoriteAction } from '../../store/api-actions';
 
@@ -8,6 +9,7 @@ function ToggleFavorite({
 }): JSX.Element | null {
   const {
     favoriteFilms,
+    authorizationStatus,
   } = useAppSelector((state) => state);
 
   const dispatch = useAppDispatch();
@@ -21,8 +23,7 @@ function ToggleFavorite({
     }));
   };
 
-
-  return (
+  return authorizationStatus === AuthorizationStatus.Auth ? (
     <button
       className="btn btn--list film-card__button"
       type="button"
@@ -38,7 +39,8 @@ function ToggleFavorite({
       <span>My list</span>
       <span className="film-card__count">{favoriteFilms.length}</span>
     </button>
-  );
+  )
+    : null;
 }
 
 export default ToggleFavorite;

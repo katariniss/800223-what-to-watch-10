@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { fetchCurrentFilmAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/actions';
 import ToggleFavorite from '../../components/toggle-favorite/toggle-favorite';
+import { AuthorizationStatus } from '../../const';
 
 function FilmPage(): JSX.Element {
   const {
@@ -19,6 +20,7 @@ function FilmPage(): JSX.Element {
     reviews,
     similarFilms,
     numberOfFilmsToShow,
+    authorizationStatus,
   } = useAppSelector((state) => state);
 
   const { id } = useParams();
@@ -66,9 +68,11 @@ function FilmPage(): JSX.Element {
                   <span>Play</span>
                 </button>
                 <ToggleFavorite id={currentFilm.id} />
-                <Link to={buildFilmReviewPath(id as string)} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <Link to={buildFilmReviewPath(id as string)} className="btn film-card__button">
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
