@@ -1,11 +1,18 @@
 import { FilmReview } from '../../types/films';
+import { format } from 'date-fns';
 
 type SingleFilmReviewProps = {
   review: FilmReview
 }
 
-function SingleFilmReview({ review }: SingleFilmReviewProps): JSX.Element {
-  const { date, comment, user, rating } = review;
+function SingleFilmReview({
+  review: {
+    date,
+    comment,
+    user,
+    rating
+  }
+}: SingleFilmReviewProps): JSX.Element {
   const dateToFormat = new Date(date);
 
   return (
@@ -14,7 +21,7 @@ function SingleFilmReview({ review }: SingleFilmReviewProps): JSX.Element {
         <p className="review__text">{comment}</p>
         <footer className="review__details">
           <cite className="review__author">{user.name}</cite>
-          <time className="review__date" dateTime={dateToFormat.toISOString()}>{dateToFormat.toLocaleDateString('en-US')}</time>
+          <time className="review__date" dateTime={dateToFormat.toISOString()}>{format(dateToFormat, 'MMMM dd, yyyy')}</time>
         </footer>
       </blockquote>
       <div className="review__rating">{rating}</div>
