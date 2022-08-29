@@ -17,14 +17,14 @@ function MainPage(): JSX.Element {
     numberOfFilmsToShow,
   } = useAppSelector((state) => state);
 
-  const filmsFilteredByGenre = useMemo(
+  const getFilmsFilteredByGenre = useMemo(
     () => films.filter((film) => !currentGenre || film.genre === currentGenre),
     [currentGenre, films]
   );
 
-  const filmsFilteredByGenreToShow = useMemo(
-    () => filmsFilteredByGenre.slice(0, numberOfFilmsToShow),
-    [filmsFilteredByGenre, numberOfFilmsToShow]
+  const getFilmsFilteredByGenreToShow = useMemo(
+    () => getFilmsFilteredByGenre.slice(0, numberOfFilmsToShow),
+    [getFilmsFilteredByGenre, numberOfFilmsToShow]
   );
 
   const allGenres = useMemo(
@@ -96,8 +96,8 @@ function MainPage(): JSX.Element {
             genres={allGenres}
           />
           <FilmList
-            films={filmsFilteredByGenreToShow}
-            hasMoreFilmsToShow={filmsFilteredByGenre.length > numberOfFilmsToShow}
+            films={getFilmsFilteredByGenreToShow}
+            hasMoreFilmsToShow={getFilmsFilteredByGenre.length > numberOfFilmsToShow}
           />
         </section>
         <Footer />

@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { TIMEOUT_TO_PLAY_PREVIEW } from '../../const';
 import { Film } from '../../types/films';
 import VideoPlayer from '../video-player/video-player';
 
@@ -17,7 +18,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       onMouseEnter={() => {
         setTimeout(() => {
           setIsPreviewPlaying((prevState) => !prevState);
-        }, 1000);
+        }, TIMEOUT_TO_PLAY_PREVIEW);
       }}
       onMouseLeave={() => {
         setIsPreviewPlaying(!isPreviewPlaying);

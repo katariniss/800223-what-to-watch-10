@@ -26,3 +26,7 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const USER_COMMENT_MIN_LENGTH = 50;
 export const USER_COMMENT_MAX_LENGTH = 400;
+
+export const MINUTES_IN_AN_HOUR = 60;
+
+export const TIMEOUT_TO_PLAY_PREVIEW = 300;
